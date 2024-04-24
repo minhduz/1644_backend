@@ -42,7 +42,7 @@ router.post("/signup", async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRE }
   );
 
-  return res.cookie("token", token).sendStatus(200);
+  return res.cookie("token", token, { secure: true }).sendStatus(200);
 });
 
 // Login
@@ -76,7 +76,7 @@ router.post("/login", async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRE }
   );
 
-  return res.cookie("token", token).sendStatus(200);
+  return res.cookie("token", token, { secure: true }).sendStatus(200);
 });
 
 //Logout
