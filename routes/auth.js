@@ -88,6 +88,8 @@ router.post("/login", async (req, res) => {
 
 //Logout
 router.get("/signout", (req, res) => {
+  // Xóa token từ local storage
+  localStorage.removeItem("token");
   return res.clearCookie("token").sendStatus(200);
 });
 
