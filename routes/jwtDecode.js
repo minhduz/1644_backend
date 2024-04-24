@@ -2,10 +2,13 @@ const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
 
+const LocalStorage = require("node-localstorage").LocalStorage;
+const localStorage = new LocalStorage("./scratch");
+
 // Decode JWT token
 router.use((req, res, next) => {
   // Get token from cookies
-  const token = req.cookies.token ? req.cookies.token : null;
+  const token = localStorage.getItem("token");
 
   if (!token) {
     return res.status(401).send("Token not provided");

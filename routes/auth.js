@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const LocalStorage = require("node-localstorage").LocalStorage;
+const localStorage = new LocalStorage("./scratch");
+
 const UserModel = require("../models/UserModel");
 
 router.post("/signup", async (req, res) => {
@@ -42,6 +45,8 @@ router.post("/signup", async (req, res) => {
     { expiresIn: process.env.JWT_EXPIRE }
   );
 
+  localStorage.setItem("token", token);
+
   return res.cookie("token", token, { secure: true }).sendStatus(200);
 });
 
@@ -75,6 +80,8 @@ router.post("/login", async (req, res) => {
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE }
   );
+
+  localStorage.setItem("token", token);
 
   return res.cookie("token", token, { secure: true }).sendStatus(200);
 });
