@@ -11,13 +11,13 @@ const app = express();
 app.options(
   "*",
   cors({
-    origin: ["https://atn-toy.onrender.com", "http://localhost:3001"],
+    origin: ["https://atn-toy-0p7v.onrender.com", "http://localhost:3001"],
     credentials: true,
   })
 );
 app.use(
   cors({
-    origin: ["https://atn-toy.onrender.com", "http://localhost:3001"],
+    origin: ["https://atn-toy-0p7v.onrender.com", "http://localhost:3001"],
     credentials: true,
   })
 );
