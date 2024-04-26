@@ -11,18 +11,42 @@ const UserModel = require("../models/UserModel");
 router.get("/", jwtDecode, async (req, res) => {
   const { userId } = req;
   let orders;
-
+  let total = 0;
   try {
     orders = await OrderModel.find(
       { user: userId },
       "-items -shippingAddress -user"
     ).sort({ date: "desc" });
+
+    orders.forEach((order) => {
+      total += order.totalBill;
+    });
   } catch (error) {
     console.log(error);
     return res.sendStatus(400);
   }
-
   return res.status(200).json(orders);
+});
+
+router.get("/total", jwtDecode, async (req, res) => {
+  const { userId } = req;
+  let orders;
+  let total = 0;
+  try {
+    orders = await OrderModel.find(
+      { user: userId },
+      "-items -shippingAddress -user"
+    ).sort({ date: "desc" });
+
+    orders.forEach((order) => {
+      total += order.totalBill;
+    });
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(400);
+  }
+  console.log(total);
+  return res.status(200).json(total);
 });
 
 /* Get single order
