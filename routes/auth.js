@@ -22,7 +22,6 @@ router.post("/signup", async (req, res) => {
   if (existedUser) {
     return res.status(400).send("User Exsited");
   }
-
   // hash password
   password = bcrypt.hashSync(password, 10);
   let newUser;
@@ -37,16 +36,13 @@ router.post("/signup", async (req, res) => {
     console.log(error);
     return res.sendStatus(500);
   }
-
   // generate JWT
   const token = jwt.sign(
     { userId: newUser._id, email: newUser.email, role: newUser.role },
     process.env.JWT_SECRET,
     { expiresIn: process.env.JWT_EXPIRE }
   );
-
   localStorage.setItem("token", token);
-
   return res.cookie("token", token, { secure: true }).sendStatus(200);
 });
 

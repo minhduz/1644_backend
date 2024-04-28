@@ -15,21 +15,16 @@ supported sort type: 'dateAdded_asc', 'dateAdded_desc' , 'price_asc', 'name_desc
 router.get("/", async (req, res) => {
   // Lấy giá trị tham số truy vấn "searchVal" từ yêu cầu. Nếu không có, mặc định là chuỗi rỗng.
   const searchVal = req.query.searchVal ? req.query.searchVal : "";
-
   // Lấy giá trị tham số truy vấn "skip" từ yêu cầu. Nếu không có, mặc định là null.
   const skip = req.query.skip ? req.query.skip : null;
-
   // Lấy giá trị tham số truy vấn "limit" từ yêu cầu. Nếu không có, mặc định là null.
   const limit = req.query.limit ? req.query.limit : null;
-
   // Xác định thứ tự sắp xếp của kết quả. Nếu có tham số truy vấn "sort", sẽ sử dụng nó để sắp xếp kết quả, ngược lại sắp xếp theo thời gian thêm mới nhất.
   const sort = req.query.sort
     ? { [req.query.sort.split("_")[0]]: req.query.sort.split("_")[1] }
     : { dateAdded: "desc" };
-
   let count;
   let products;
-
   try {
     // Tạo biểu thức chính quy để tìm kiếm trong trường "name" của sản phẩm. Biểu thức này sẽ không phân biệt chữ hoa và chữ thường.
     const searchRegExp = new RegExp(`${searchVal}`, "i");
@@ -50,7 +45,6 @@ router.get("/", async (req, res) => {
     console.log(error);
     return res.sendStatus(500);
   }
-
   // Trả về kết quả dưới dạng đối tượng JSON chứa số lượng sản phẩm và danh sách sản phẩm phù hợp với các tham số truy vấn.
   return res.status(200).json({ count: count, data: products });
 });
